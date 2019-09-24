@@ -88,15 +88,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-      <p>      {this.state.word}is a word ? {this.state.message}</p>
-      <p>     old {this.state.previousLetter} et current {this.state.currentLetter}</p>
-
-        <tbody>
+        <tbody className='Grid'>
+          <p> {this.state.word} </p>
+          <p> {this.state.message} </p>
           {this.state.grid.map((line, y) => {
-            return (<div>
+            return (<div className='Row'>
               {line.map((char, x) => {
                 return (
-                  <button  value={[x, y]}onClick={() => this.addLetter(x,y)}> {char}</button>
+                  <a className='Button' value={[x, y]}onClick={() => this.addLetter(x,y)}> {char}</a>
                 )
               })}
             </div>

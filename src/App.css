@@ -6,7 +6,7 @@
   height: 40vmin;
 }
 
-.App-header {
+.Grid {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -19,4 +19,18 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.Button {
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+}
+
+.Row {
+  margin: 0.5em;
+  padding: 0.5em;
 }
