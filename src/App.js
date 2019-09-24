@@ -27,7 +27,10 @@ class App extends React.Component {
   checkWord(arr) {
     let a = arr
     let b = this.state.currentLetter
-
+    let max
+    let min 
+    let isReversed = false
+    let currentWord = ''
 
     const isCol = a[0] === b[0]
     const isRow = a[1] === b[1]
@@ -37,11 +40,26 @@ class App extends React.Component {
       return this.setState({message: 'Please provide two different letters'})
     } else if (!isRow && !isCol && !isDiag) {
       return this.setState({message: 'Please provide two letters that can create a word, either a diagonal a row or a column'})
-    } else if (isRow) {
-      console.log('triggered')
-      let max
-      let min 
-      let isReversed = false
+    } else if (isRow || isCol) {
+      let marker
+
+      isRow ? marker = 0 : marker = 1
+      
+      if (a[marker] > b[marker]) {
+        max = a
+        min = b
+      } else {
+        max = b
+        min = a
+        isReversed = true
+      } 
+      while (max[marker] !== min[marker]) {
+        currentWord += this.state.grid[max[1]][max[0]]
+        max[marker] -= 1
+      }
+      currentWord += this.state.grid[min[1]][min[0]]
+    } else {
+      let yDir
       
       if (a[0] > b[0]) {
         max = a
@@ -50,31 +68,24 @@ class App extends React.Component {
         max = b
         min = a
         isReversed = true
-      } 
-      console.log(max)
-      console.log(min)
-      let currentWord = ''
-      while (max[0] !== min[0]) {
-        console.log(max[0])
-        console.log(max[1])
+      }
+      max[1] > min[1] ? yDir = -1 : yDir = 1
+
+      while (max[1] !== min[1]) {
         currentWord += this.state.grid[max[1]][max[0]]
         max[0] -= 1
+        max[1] += yDir
       }
       currentWord += this.state.grid[min[1]][min[0]]
-      if (!isReversed) {
-        currentWord = currentWord.split('').reverse().join('')
-      }
-      this.setState({word: currentWord})
-      this.state.dict.includes(currentWord) ? this.setState({ message: 'is a correct word' }) : this.setState({ message : 'isnt a correct word' })
     }
-    console.log(this.state.word)
+    if (!isReversed) {
+      currentWord = currentWord.split('').reverse().join('')
+    }
+    this.setState({word: currentWord})
+    this.state.dict.includes(currentWord) ? this.setState({ message: 'is a correct word' }) : this.setState({ message : 'isnt a correct word' })
   }
   
   render() {
-    let result = ''
-    if (!this.state.word.length === 0) {
-      this.state.isWord ? result = 'is a correct word' : result = 'isnt a correct word';
-    }
     return (
       <div className="App">
       <p>      {this.state.word}is a word ? {this.state.message}</p>
