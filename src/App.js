@@ -7,7 +7,6 @@ class App extends React.Component {
     this.state = {
       previousLetter: [],
       currentLetter: [],
-      isAValidSeq: false,
       message: '',
       grid: [['a','b', 'c', 'x'],['d','e', 'f', 'y'], ['g', 'h', 'l', 'z']],
       word: '',
@@ -23,6 +22,8 @@ class App extends React.Component {
       this.checkWord([x,y])
     }
   }
+
+
 
   checkWord(arr) {
     let a = arr
@@ -82,15 +83,15 @@ class App extends React.Component {
       currentWord = currentWord.split('').reverse().join('')
     }
     this.setState({word: currentWord})
-    this.state.dict.includes(currentWord) ? this.setState({ message: 'is a correct word' }) : this.setState({ message : 'isnt a correct word' })
+    this.state.dict.includes(currentWord) ? this.setState({ message: 'is a correct word 🎉' }) : this.setState({ message : 'isnt a correct word 🤔' })
+    this.setState({currentLetter: []})
   }
   
   render() {
     return (
       <div className="App">
         <tbody className='Grid'>
-          <p> {this.state.word} </p>
-          <p> {this.state.message} </p>
+          <p> {this.state.word} {this.state.message} </p>
           {this.state.grid.map((line, y) => {
             return (<div className='Row'>
               {line.map((char, x) => {
